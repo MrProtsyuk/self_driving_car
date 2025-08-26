@@ -19,6 +19,8 @@ class Car {
     // Using angles to alter turning speed
     this.angle = 0;
 
+    this.damaged = false;
+
     this.sensor = new Sensor(this);
 
     // Controls from the controls.js file
@@ -26,8 +28,44 @@ class Car {
   }
 
   update(roadBorders) {
-    this.#move();
+    if (!this.damaged) {
+      this.#move();
+      this.polygon = this.#createPolygon();
+      this.damaged = this.#assessDamage(roadBorders);
+    }
     this.sensor.update(roadBorders);
+  }
+
+  #assessDamage(roadBorders) {
+    for (let i = 0; i < roadBorders.length; i++) {
+      if (polysIntersect(this.polygon, roadBorders[i])) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  #createPolygon() {
+    const points = [];
+    const rad = Math.hypot(this.width, this.height) / 2;
+    const alpha = Math.atan2(this.width, this.height);
+    points.push({
+      x: this.x - Math.sin(this.angle - alpha) * rad,
+      y: this.y - Math.cos(this.angle - alpha) * rad,
+    });
+    points.push({
+      x: this.x - Math.sin(this.angle + alpha) * rad,
+      y: this.y - Math.cos(this.angle + alpha) * rad,
+    });
+    points.push({
+      x: this.x - Math.sin(Math.PI + this.angle - alpha) * rad,
+      y: this.y - Math.cos(Math.PI + this.angle - alpha) * rad,
+    });
+    points.push({
+      x: this.x - Math.sin(Math.PI + this.angle + alpha) * rad,
+      y: this.y - Math.cos(Math.PI + this.angle + alpha) * rad,
+    });
+    return points;
   }
 
   #move() {
@@ -75,23 +113,17 @@ class Car {
 
   // Method that gets the context passed through
   draw(ctx) {
-    // The following calls are made to rotate the car so that it can turn
-    ctx.save();
-    ctx.translate(this.x, this.y);
-    ctx.rotate(-this.angle);
-    // Begins the drawing of the car context
+    if (this.damaged) {
+      ctx.fillStyle = "grey";
+    } else {
+      ctx.fillStyle = "black";
+    }
     ctx.beginPath();
-    ctx.rect(
-      // The x of the car will be the center of the car inside
-      -this.width / 2,
-      -this.height / 2,
-      this.width,
-      this.height
-    );
+    ctx.moveTo(this.polygon[0].x, this.polygon[0].y);
+    for (let i = 1; i < this.polygon.length; i++) {
+      ctx.lineTo(this.polygon[i].x, this.polygon[i].y);
+    }
     ctx.fill();
-
-    // This will stop from the car from doing infinite rotation
-    ctx.restore();
 
     this.sensor.draw(ctx);
   }
