@@ -1,10 +1,12 @@
 body {
   margin: 0;
-  background: darkgray;
+  background-image: url("/16BitSkyline.png");
+  background-color: rgba(0, 0, 0, 0.1);
   overflow: hidden;
   text-align: center;
 }
 
 #myCanvas {
-  background: lightgrey;
+  background: rgb(123, 123, 123);
+  opacity: 1;
 }
