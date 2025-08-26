@@ -19,12 +19,15 @@ class Car {
     // Using angles to alter turning speed
     this.angle = 0;
 
+    this.sensor = new Sensor(this);
+
     // Controls from the controls.js file
     this.controls = new Controls();
   }
 
-  update() {
+  update(roadBorders) {
     this.#move();
+    this.sensor.update(roadBorders);
   }
 
   #move() {
@@ -89,5 +92,7 @@ class Car {
 
     // This will stop from the car from doing infinite rotation
     ctx.restore();
+
+    this.sensor.draw(ctx);
   }
 }

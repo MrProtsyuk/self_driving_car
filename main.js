@@ -11,7 +11,7 @@ const car = new Car(road.getLaneCenter(1), 100, 30, 50);
 animate();
 
 function animate() {
-  car.update();
+  car.update(road.borders);
   // By moving this line of code to this function, we are able to over come the issue of the road not going from top to bottow, and the car leaving a trail
   // This is because both are updated on the animate funciton, therefore being refreshed
   canvas.height = window.innerHeight;
