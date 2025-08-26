@@ -1,12 +1,19 @@
 class Controls {
-  constructor() {
+  constructor(type) {
     this.forward = false;
     this.reverse = false;
     this.left = false;
     this.right = false;
 
+    switch (type) {
+      case "KEYS":
+        this.#addKeyboardListeners();
+        break;
+      case "DUMMY":
+        this.forward = true;
+        break;
+    }
     // Private method for listening to the keyboard
-    this.#addKeyboardListeners();
   }
   #addKeyboardListeners() {
     document.onkeydown = (e) => {
