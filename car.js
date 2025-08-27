@@ -2,7 +2,7 @@
 class Car {
   // Four values that are passing into the object when created
   // This allows the car to know where it is and how big it is
-  constructor(x, y, width, height, controlType, maxSpeed = 1.7) {
+  constructor(x, y, width, height, controlType, maxSpeed = 3.25) {
     this.x = x;
     this.y = y;
     this.width = width;

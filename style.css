@@ -31,5 +31,5 @@ button:hover {
   opacity: 1;
 }
 #networkCanvas {
-  background: black;
+  background: rgba(98, 98, 98, 0.53);
 }
