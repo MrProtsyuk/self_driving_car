@@ -2,7 +2,7 @@
 class Car {
   // Four values that are passing into the object when created
   // This allows the car to know where it is and how big it is
-  constructor(x, y, width, height, controlType, maxSpeed = 1) {
+  constructor(x, y, width, height, controlType, maxSpeed = 1.7) {
     this.x = x;
     this.y = y;
     this.width = width;
@@ -136,7 +136,7 @@ class Car {
   }
 
   // Method that gets the context passed through
-  draw(ctx, color) {
+  draw(ctx, color, drawSensor = false) {
     if (this.damaged) {
       ctx.fillStyle = "red";
     } else {
@@ -148,7 +148,7 @@ class Car {
       ctx.lineTo(this.polygon[i].x, this.polygon[i].y);
     }
     ctx.fill();
-    if (this.sensor) {
+    if (this.sensor && drawSensor) {
       this.sensor.draw(ctx);
     }
   }

@@ -3,7 +3,26 @@ body {
   background-image: url("/16BitSkyline.png");
   background-color: rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#verticalButtons {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  border: none;
+  border-radius: 5px;
+  padding: 5px 5px 7px 5px;
+  margin: 2px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: rgba(235, 235, 235, 0.8);
 }
 
 #carCanvas {
